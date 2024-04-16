@@ -6,7 +6,7 @@ describe('template spec', () => {
     cy.visit('../../src/index.html')
   })
 
-  it('does nothing idk', () => {
-    
+  it('', () => {
+
   })
 })
