@@ -1,5 +1,3 @@
-/// <reference types="Cypress" />
-
 describe('TAT Customer Service Center', () => {
 
   beforeEach(() => {
