@@ -1,10 +1,10 @@
 describe('TAT Customer Service Center', () => {
 
   beforeEach(() => {
-    cy.visit('../../src/index.html')
+    cy.visit('./src/index.html')
   })
 
-  it('checks app title', () => {
-    cy.get('#title').should('have.text', 'TAT CSC 🧑‍💻');
+  it('checks app page title', () => {
+    cy.title().should('eq', 'TAT Customer Service Center');
   })
 })
