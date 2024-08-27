@@ -7,4 +7,12 @@ describe('TAT Customer Service Center', () => {
   it('checks app page title', () => {
     cy.title().should('eq', 'TAT Customer Service Center');
   })
+
+  it('types on ___ field', () => {
+    //Arange
+
+    //Act
+
+    //Assert
+  })
 })
