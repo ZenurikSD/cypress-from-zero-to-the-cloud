@@ -8,10 +8,13 @@ describe('TAT Customer Service Center', () => {
     cy.title().should('eq', 'TAT Customer Service Center');
   })
 
-  it('types on ___ field', () => {
-    //Arange
+  it('fills in the required fields and submits the form', () => {
+    //Arrange
 
     //Act
+    cy.get('#firstName').type('Alisson')
+    cy.get('#lastName').type('Silva')
+    cy.get('#email').type('alissonsilva@email.com')
 
     //Assert
   })
