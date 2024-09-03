@@ -40,4 +40,38 @@ describe('TAT Customer Service Center', () => {
     cy.get('.button').contains('Send').click()
     cy.get('.error').should('be.visible')    
   })
+
+  it('does not add non-numeric values on Phone field', () => {
+    cy.get('#phone').type('Hey I just met you, and this is crazy')
+    cy.get('#phone').should('have.value', '')
+    //Não posso usar "be.empty" pq ele olha o conteúdo da tag, não o conteúdo do input
+  })
+
+  it('displays an error message when the phone becomes required but is not filled in before the form submission', () => {
+    cy.get('#firstName').type('Alisson')
+    cy.get('#lastName').type('Silva')
+    cy.get('#email').type('alissonsilva@email.com')
+
+    cy.get('#phone-checkbox').check()
+
+    cy.get('#open-text-area').type('Alô?')
+
+    cy.get('.button').contains('Send').click()
+    cy.get('.error').should('be.visible')
+  })
+
+  it.only('fills and clears the first name, last name, email and phone fields', () => {
+    cy.get('#firstName').type('Alisson').clear()
+    cy.get('#lastName').type('Silva').clear()
+    cy.get('#email').type('alissonsilva@email.com').clear()
+    cy.get('#phone').type('40028922').clear()
+
+    // se eu já confirmei em outros testes que os campos preenchem os valores corretamente
+    // preciso fazer esse assert no meio do type e clear? fica excessivo.
+
+    cy.get('#firstName').should('have.value', '')
+    cy.get('#lastName').should('have.value', '')
+    cy.get('#email').should('have.value', '')
+    cy.get('#phone').should('have.value', '')
+  })
 })
