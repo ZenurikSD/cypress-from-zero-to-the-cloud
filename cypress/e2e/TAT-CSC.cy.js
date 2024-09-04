@@ -60,7 +60,7 @@ describe('TAT Customer Service Center', () => {
     cy.get('.error').should('be.visible')
   })
 
-  it.only('fills and clears the first name, last name, email and phone fields', () => {
+  it('fills and clears the first name, last name, email and phone fields', () => {
     cy.get('#firstName').type('Alisson').clear()
     cy.get('#lastName').type('Silva').clear()
     cy.get('#email').type('alissonsilva@email.com').clear()
@@ -74,4 +74,18 @@ describe('TAT Customer Service Center', () => {
     cy.get('#email').should('have.value', '')
     cy.get('#phone').should('have.value', '')
   })
+
+  it('displays an error message when submitting the form without filling the required fields', () => {
+    cy.get('[type="submit"]').contains('Send').click()  // Se eu sei que só tem 1 botão de submit, o contains é redundante
+
+    cy.get('.error').should('be.visible')
+  })
+
+  it.only('Submits the form using custom commands to fill all required fields', () => {
+    cy.fillRequiredFields()
+
+    cy.get('[type="submit"]').click()
+    cy.get('.success').should('be.visible')
+  })
+
 })
