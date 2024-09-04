@@ -35,3 +35,9 @@ Cypress.Commands.add('fillRequiredFields', () => {
     cy.get('#email').should('have.value', 'alissonsilva@email.com')
     cy.get('#open-text-area').should('have.value', 'Somebody once told me the world was gonna roll me')
 })
+
+// Fills fields in a form by passing an object with pairs of (selector, value)
+Cypress.Commands.add('fillFormFields', (fields) => {
+    //Não sei porra nenhuma de javascript, como que eu faço um for each?
+
+})

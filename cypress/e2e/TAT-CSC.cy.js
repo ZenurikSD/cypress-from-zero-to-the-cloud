@@ -81,7 +81,7 @@ describe('TAT Customer Service Center', () => {
     cy.get('.error').should('be.visible')
   })
 
-  it.only('Submits the form using custom commands to fill all required fields', () => {
+  it('Submits the form using custom commands to fill all required fields', () => {
     cy.fillRequiredFields()
 
     cy.get('[type="submit"]').click()
