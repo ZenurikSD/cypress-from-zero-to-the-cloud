@@ -1,5 +1,14 @@
 describe('TAT Customer Service Center', () => {
 
+  //Vetor de 'tuplas' [seletor, valor] para iterar
+  const basicFields = [
+    ['#firstName', 'Alisson'],
+    ['#lastName', 'Silva'],
+    ['#email', 'alissonsilva@email.com'],
+    ['#open-text-area', 'Another one']
+  ]
+
+
   beforeEach(() => {
     cy.visit('./src/index.html')
   })
@@ -81,8 +90,10 @@ describe('TAT Customer Service Center', () => {
     cy.get('.error').should('be.visible')
   })
 
-  it('Submits the form using custom commands to fill all required fields', () => {
-    cy.fillRequiredFields()
+  it.only('Submits the form using custom commands to fill all required fields', () => {
+    // cy.fillRequiredFields()
+
+    cy.fillFormFields(basicFields)
 
     cy.get('[type="submit"]').click()
     cy.get('.success').should('be.visible')
