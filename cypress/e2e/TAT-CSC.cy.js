@@ -1,13 +1,11 @@
 describe('TAT Customer Service Center', () => {
 
-  //Vetor de 'tuplas' [seletor, valor] para iterar
   const basicFields = [
     ['#firstName', 'Alisson'],
     ['#lastName', 'Silva'],
     ['#email', 'alissonsilva@email.com'],
-    ['#open-text-area', 'Another one']
+    ['#open-text-area', 'Some text, wow.']
   ]
-
 
   beforeEach(() => {
     cy.visit('./src/index.html')
@@ -33,7 +31,7 @@ describe('TAT Customer Service Center', () => {
     cy.get('@txtarea').should('have.value', 'Test with .type() and .click()!')
 
     //Act 2 -- Nada diz que eu não posso encadear o AAA 🤔
-    cy.get('.button').contains('Send').click()
+    cy.contains('[type="submit"]', 'Send').click()
 
     //Assert 2
     cy.get('.success').should('be.visible')
@@ -46,7 +44,7 @@ describe('TAT Customer Service Center', () => {
     cy.get('#email').type('alissonsilva')
     cy.get('#open-text-area').type('Invalid email test')
 
-    cy.get('.button').contains('Send').click()
+    cy.contains('[type="submit"]', 'Send').click()
     cy.get('.error').should('be.visible')    
   })
 
@@ -65,7 +63,7 @@ describe('TAT Customer Service Center', () => {
 
     cy.get('#open-text-area').type('Alô?')
 
-    cy.get('.button').contains('Send').click()
+    cy.contains('[type="submit"]', 'Send').click()
     cy.get('.error').should('be.visible')
   })
 
@@ -85,12 +83,12 @@ describe('TAT Customer Service Center', () => {
   })
 
   it('displays an error message when submitting the form without filling the required fields', () => {
-    cy.get('[type="submit"]').contains('Send').click()  // Se eu sei que só tem 1 botão de submit, o contains é redundante
+    cy.get('[type="submit"]').contains('Send').click()
 
     cy.get('.error').should('be.visible')
   })
 
-  it.only('Submits the form using custom commands to fill all basic fields', () => {
+  it('Submits the form using custom commands to fill all basic fields', () => {
 
     cy.fillFormFields(basicFields)
 
