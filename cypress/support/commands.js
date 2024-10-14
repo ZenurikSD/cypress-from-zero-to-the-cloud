@@ -29,11 +29,6 @@ Cypress.Commands.add('fillRequiredFields', () => {
     cy.get('#lastName').type('Silva')
     cy.get('#email').type('alissonsilva@email.com')
     cy.get('#open-text-area').type('Somebody once told me the world was gonna roll me')
-
-    cy.get('#firstName').should('have.value', 'Alisson')
-    cy.get('#lastName').should('have.value', 'Silva')
-    cy.get('#email').should('have.value', 'alissonsilva@email.com')
-    cy.get('#open-text-area').should('have.value', 'Somebody once told me the world was gonna roll me')
 })
 
 /** Fills fields in a form by passing an array with pairs of (selector, value) */

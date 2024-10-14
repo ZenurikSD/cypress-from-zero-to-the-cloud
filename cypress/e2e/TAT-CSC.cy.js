@@ -21,24 +21,16 @@ describe('TAT Customer Service Center', () => {
   })
 
   it('fills in the required fields and submits the form', () => {
-    //Arrange - seria "chegar até a página", mas já incluí no beforeEach()
+    const longText = Cypress._.repeat('Lorem ipsum sit dolor amet', 20)
 
     //Act
-    cy.get('#firstName').as('first').type('Alisson')
-    cy.get('#lastName').as('last').type('Silva')
-    cy.get('#email').as('email').type('alissonsilva@email.com')
-    cy.get('#open-text-area').as('txtarea').type('Test with .type() and .click()!', {delay: 0})
-    
-    //Assert 1
-    cy.get('@first').should('have.value', 'Alisson')
-    cy.get('@last').should('have.value', 'Silva')
-    cy.get('@email').should('have.value', 'alissonsilva@email.com')
-    cy.get('@txtarea').should('have.value', 'Test with .type() and .click()!')
-
-    //Act 2 -- Nada diz que eu não posso encadear o AAA 🤔
+    cy.get('#firstName').type('Alisson')
+    cy.get('#lastName').type('Silva')
+    cy.get('#email').type('alissonsilva@email.com')
+    cy.get('#open-text-area').type(longText, {delay: 0})
     cy.contains('[type="submit"]', 'Send').click()
 
-    //Assert 2
+    //Assert
     cy.get('.success').should('be.visible')
   })
 
@@ -53,44 +45,55 @@ describe('TAT Customer Service Center', () => {
     mainPage.getSuccessToast().should('be.visible');
   })
 
-  it('displays an error mesage when submitting the form with an email with invalid formatting', () => {
+  it('Displays an error mesage when submitting the form with an email with invalid formatting', () => {
     //Poderia mover isso pra um custom command..
     cy.get('#firstName').type('Alisson')
     cy.get('#lastName').type('Silva')
     cy.get('#email').type('alissonsilva')
     cy.get('#open-text-area').type('Invalid email test')
-
     cy.contains('[type="submit"]', 'Send').click()
+
     cy.get('.error').should('be.visible')    
   })
 
-  it('does not add non-numeric values on Phone field', () => {
+  it('Phone field does not accept non-numeric values', () => {
     cy.get('#phone').type('Hey I just met you, and this is crazy')
+
     cy.get('#phone').should('have.value', '')
     //Não posso usar "be.empty" pq ele olha o conteúdo da tag, não o conteúdo do input
   })
 
-  it('displays an error message when the phone becomes required but is not filled in before the form submission', () => {
+  it('Displays an error message when the phone becomes required but is not filled in before the form submission', () => {
     cy.get('#firstName').type('Alisson')
     cy.get('#lastName').type('Silva')
     cy.get('#email').type('alissonsilva@email.com')
-
     cy.get('#phone-checkbox').check()
-
     cy.get('#open-text-area').type('Alô?')
-
     cy.contains('[type="submit"]', 'Send').click()
+
     cy.get('.error').should('be.visible')
   })
 
-  it('fills and clears the first name, last name, email and phone fields', () => {
-    cy.get('#firstName').type('Alisson').clear()
-    cy.get('#lastName').type('Silva').clear()
-    cy.get('#email').type('alissonsilva@email.com').clear()
-    cy.get('#phone').type('40028922').clear()
+  it('Fills and clears the first name, last name, email and phone fields', () => {
+    cy.get('#firstName')
+      .type('Alisson')
+      .should('have.value', 'Alisson')
+      .clear()
+      
+    cy.get('#lastName')
+      .type('Silva')
+      .should('have.value', 'Silva')
+      .clear()
 
-    // se eu já confirmei em outros testes que os campos preenchem os valores corretamente
-    // preciso fazer esse assert no meio do type e clear? fica excessivo.
+    cy.get('#email')
+      .type('alissonsilva@email.com')
+      .should('have.value', 'alissonsilva@email.com')
+      .clear()
+
+    cy.get('#phone')
+      .type('40028922')
+      .should('have.value', '40028922')
+      .clear()
 
     cy.get('#firstName').should('have.value', '')
     cy.get('#lastName').should('have.value', '')
@@ -98,14 +101,13 @@ describe('TAT Customer Service Center', () => {
     cy.get('#phone').should('have.value', '')
   })
 
-  it('displays an error message when submitting the form without filling the required fields', () => {
-    cy.get('[type="submit"]').contains('Send').click()
+  it('Displays an error message when submitting the form without filling the required fields', () => {
+    cy.contains('[type="submit"]', 'Send').click()
 
     cy.get('.error').should('be.visible')
   })
 
   it('Submits the form using custom commands to fill all basic fields', () => {
-
     cy.fillFormFields(basicFields)
 
     cy.contains('[type="submit"]', 'Send').click()
