@@ -1,3 +1,5 @@
+import MainPage from '../support/page-objects/tat-csc.po.js';
+
 describe('TAT Customer Service Center', () => {
 
   const basicFields = [
@@ -7,9 +9,12 @@ describe('TAT Customer Service Center', () => {
     ['#open-text-area', 'Some text, wow.']
   ]
 
+  const mainPage = new MainPage();
+
   beforeEach(() => {
     cy.visit('./src/index.html')
   })
+
 
   it('checks app page title', () => {
     cy.title().should('eq', 'TAT Customer Service Center');
@@ -35,6 +40,17 @@ describe('TAT Customer Service Center', () => {
 
     //Assert 2
     cy.get('.success').should('be.visible')
+  })
+
+  it.only('fills required fields using page object model and submits', () => {
+    mainPage.fillFirstName('Page');
+    mainPage.fillLastName('Object');
+    mainPage.fillEmail('page@object.com');
+    mainPage.fillPhone(12356789);
+    mainPage.fillFeedbackBox('Trying out the page object model for the first time');
+
+    mainPage.clickSendButton();
+    mainPage.getSuccessToast().should('be.visible');
   })
 
   it('displays an error mesage when submitting the form with an email with invalid formatting', () => {

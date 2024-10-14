@@ -1,25 +1,31 @@
 class MainPage {
-    fillFirstName(text: string){
+    fillFirstName(text){
         cy.get('#firstName').type(text);
     }
 
-    fillLastName(text: string){
+    fillLastName(text){
         cy.get('#lastName').type(text);
     }
 
-    fillEmail(text: string){
+    fillEmail(text){
         cy.get('#email').type(text);
     }
 
-    fillPhone(phonenum: number){
+    fillPhone(phonenum){
         cy.get('#phone').type(`${phonenum}`);
     }
 
-    fillFeedbackBox(text: string){
+    fillFeedbackBox(text){
         cy.get('#open-text-area').type(text);
     }
 
     clickSendButton(){
         cy.contains('[type="submit"]', 'Send').click()
     }
+
+    getSuccessToast(){
+        return cy.get('.success')
+    }
 }
+
+export default MainPage;
